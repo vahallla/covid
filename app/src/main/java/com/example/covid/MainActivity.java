@@ -25,7 +25,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn3.setOnClickListener(this);
 
 
+
+
+
+
+
+
     }
+
     @Override//버튼 클릭시 이벤트 1,2,3
     public void onClick(View view){
         if(view.getId()==R.id.button_move1){
@@ -41,11 +48,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-
-
-
         }
-    }
+
+
+
+}
 
 
 
