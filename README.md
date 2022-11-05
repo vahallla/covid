@@ -7,5 +7,4 @@
 # 위의 문제 사유 : 수정완료 - 지도 및 restAPI 검색 기능 완료
 ## 두번째 문제 : 현재 위치를 받아오기 및 받아온 정보 기반으로 주변 장소 검색
 # 11월 5일
-## test d
-
+![8](https://user-images.githubusercontent.com/50972003/200109604-d7602c65-e0ce-41ed-b723-eb190f30d7cf.jpg)
