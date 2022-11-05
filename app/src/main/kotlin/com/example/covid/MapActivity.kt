@@ -72,7 +72,7 @@ class MapActivity : AppCompatActivity() {
 
 
 
-        //김경호 개색기 검색버튼 왜지워
+        //검색 버튼
         binding.btnSearch.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
@@ -112,6 +112,7 @@ class MapActivity : AppCompatActivity() {
         }
 
 //        binding.mapView.setCurrentLocationEventListener(onCurrentLocationUpdate())
+        //이게 있어야 최신 파일
     }
 
     // 키워드 검색 함수

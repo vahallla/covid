@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.covid">
 
+    <!--카카오API관련 및 RestAPI관련 통신 라이브러리 삭제하지 말것.-->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +36,12 @@
         <activity android:name=".covid_java"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".support_java"></activity>
-        <activity android:name="cvd"></activity>
+        <activity android:name=".cvd"></activity>
+
+        <!--카카오 API 및 앱키 삭제하거나 수정하지 말것.-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="9d80d17e13a03a6a44b7e8feca0cea28"/>
     </application>
 
 </manifest>
