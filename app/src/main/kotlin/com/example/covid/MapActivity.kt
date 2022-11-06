@@ -100,6 +100,9 @@ class MapActivity : AppCompatActivity() {
             if (checkLocationService()) {
                 // GPS가 켜져있을 경우
                 permissionCheck()
+                startTracking()
+
+
             } else {
                 // GPS가 꺼져있을 경우
                 Toast.makeText(this, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
