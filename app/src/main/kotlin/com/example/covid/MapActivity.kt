@@ -3,33 +3,33 @@ package com.example.covid
 import KakaoAPI
 import ListAdapter
 import ListLayout
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import net.daum.mf.map.api.MapPOIItem
-import net.daum.mf.map.api.MapPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import android.view.View
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import net.daum.mf.map.api.MapView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
-import kotlinx.android.synthetic.main.activity_map.*
-
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapReverseGeoCoder
+import net.daum.mf.map.api.MapView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MapActivity : AppCompatActivity() {
@@ -49,7 +49,8 @@ class MapActivity : AppCompatActivity() {
     private var radius = 200
 
 
-    private var centerPoint: MapPoint? = null
+
+//    private var centerPoint: MapPoint? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -72,12 +73,15 @@ class MapActivity : AppCompatActivity() {
 
 
 
+
         //검색 버튼
         binding.btnSearch.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
             radius = 200
-            searchKeyword(keyword,radius, pageNumber)
+            searchKeyword(keyword,pageNumber,10000,pageNumber)
+
+
 
         }
         // 이전 페이지 버튼
@@ -85,7 +89,7 @@ class MapActivity : AppCompatActivity() {
             pageNumber--
             radius = 200
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,radius, pageNumber)
+            searchKeyword(keyword,pageNumber,10000,pageNumber)
         }
 
         // 다음 페이지 버튼
@@ -93,7 +97,7 @@ class MapActivity : AppCompatActivity() {
             pageNumber++
             radius = 200
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,radius, pageNumber)
+            searchKeyword(keyword,pageNumber,10000,pageNumber)
         }
          //위치추적 버튼
         binding.btnStart.setOnClickListener {
@@ -102,10 +106,9 @@ class MapActivity : AppCompatActivity() {
                 permissionCheck()
                 startTracking()
 
-
             } else {
                 // GPS가 꺼져있을 경우
-                Toast.makeText(this, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
+                makeText(this, "GPS를 켜주세요", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -118,14 +121,15 @@ class MapActivity : AppCompatActivity() {
         //이게 있어야 최신 파일
     }
 
+
     // 키워드 검색 함수
-    private fun searchKeyword(keyword: String,radius: Int, page: Int) {
+    private fun searchKeyword(keyword: String,location:Int , radius: Int, page: Int) {
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword, radius, page)    // 검색 조건 입력
+        val call = api.getSearchKeyword(API_KEY, keyword,10000 ,page,location)    // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object: Callback<ResultSearchKeyword> {
@@ -151,14 +155,17 @@ class MapActivity : AppCompatActivity() {
             // 검색 결과 있음
             listItems.clear()                   // 리스트 초기화
             binding.mapView.removeAllPOIItems() // 지도의 마커 모두 제거
+
             for (document in searchResult!!.documents) {
                 // 결과를 리사이클러 뷰에 추가
                 val item = ListLayout(document.place_name,
                     document.road_address_name,
                     document.address_name,
                     document.x.toDouble(),
-                    document.y.toDouble())
+                    document.y.toDouble()
+                    )
                 listItems.add(item)
+
 
                 // 지도에 마커 추가
                 val point = MapPOIItem()
@@ -173,15 +180,21 @@ class MapActivity : AppCompatActivity() {
             }
             listAdapter.notifyDataSetChanged()
 
+
             binding.btnNextPage.isEnabled = !searchResult.meta.is_end // 페이지가 더 있을 경우 다음 버튼 활성화
             binding.btnPrevPage.isEnabled = pageNumber != 1             // 1페이지가 아닐 경우 이전 버튼 활성화
 
+
+
         } else {
             // 검색 결과 없음
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+            makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+
 
         }
     }
+
+
 
     private fun permissionCheck() {
         val preference = getPreferences(MODE_PRIVATE)
@@ -230,12 +243,12 @@ class MapActivity : AppCompatActivity() {
         if (requestCode == ACCESS_FINE_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 권한 요청 후 승인됨 (추적 시작)
-                Toast.makeText(this, "위치 권한이 승인되었습니다", Toast.LENGTH_SHORT).show()
+                makeText(this, "위치 권한이 승인되었습니다", Toast.LENGTH_SHORT).show()
                 startTracking()
 
             } else {
                 // 권한 요청 후 거절됨 (다시 요청 or 토스트)
-                Toast.makeText(this, "위치 권한이 거절되었습니다", Toast.LENGTH_SHORT).show()
+                makeText(this, "위치 권한이 거절되었습니다", Toast.LENGTH_SHORT).show()
                 permissionCheck()
             }
         }
@@ -247,17 +260,14 @@ class MapActivity : AppCompatActivity() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
+
+
     // 위치추적 시작
     private fun startTracking() {
         binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-        if (centerPoint != null) {
-            val point = MapPoint.mapPointWithGeoCoord(
-                centerPoint!!.mapPointGeoCoord.latitude,
-                centerPoint!!.mapPointGeoCoord.longitude
-            )
-            // 좌표값 setter
-            binding.mapView.setMapCenterPoint(point, false)
-        }
+        Toast.makeText(this,"현재 나의 위치로 이동합니다.",Toast.LENGTH_SHORT).show()
+        //11월 7일 추가된 부분 2
+
     }
 
 
@@ -265,5 +275,9 @@ class MapActivity : AppCompatActivity() {
     // 위치추적 중지
     private fun stopTracking() {
         binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff
+        Toast.makeText(this,"내 위치 추적을 중지합니다.",Toast.LENGTH_SHORT).show()
     }
+    // 위치값을 반환 받는다
+
+
 }

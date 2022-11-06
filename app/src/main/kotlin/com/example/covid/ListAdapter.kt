@@ -32,8 +32,8 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         val name: TextView = itemView.findViewById(R.id.tv_list_name)
         val road: TextView = itemView.findViewById(R.id.tv_list_road)
         val address: TextView = itemView.findViewById(R.id.tv_list_address)
-        val xcode: TextView = itemView.findViewById(R.id.tv_list_xcode)
-        val ycode: TextView = itemView.findViewById(R.id.tv_list_ycode)
+        val xcode: TextView = itemView.findViewById(R.id.tv_list_xcode)//x좌표
+        val ycode: TextView = itemView.findViewById(R.id.tv_list_ycode)//y좌표
 
     }
 
