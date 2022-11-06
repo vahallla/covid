@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn3.setOnClickListener(this);
 
 
+
     }
 
     @Override//버튼 클릭시 이벤트 1,2,3
