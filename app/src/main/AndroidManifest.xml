@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-
-    <!--카카오API관련 및 RestAPI관련 통신 라이브러리 삭제하지 말것.-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 카카오API관련 및 RestAPI관련 통신 라이브러리 삭제하지 말것. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +18,20 @@
         android:theme="@style/Theme.Covid"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".cvd9"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".cvd8"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".cvd7"
             android:exported="false">
@@ -72,12 +84,10 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".support_java" />
         <activity android:name=".cvd" />
-        <activity android:name=".cvd2" />
-
-        <!--카카오 API 및 앱키 삭제하거나 수정하지 말것.-->
+        <activity android:name=".cvd2" /> <!-- 카카오 API 및 앱키 삭제하거나 수정하지 말것. -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="9d80d17e13a03a6a44b7e8feca0cea28"/>
+            android:value="9d80d17e13a03a6a44b7e8feca0cea28" />
     </application>
 
 </manifest>
