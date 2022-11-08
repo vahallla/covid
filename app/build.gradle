@@ -45,14 +45,14 @@ android {
     dataBinding{
         enabled = true
     }
-    splits {
-        abi{
-            enable true
-            reset()
-            include 'x86' , 'armeabi-v7a','x86_64'
-            universalApk true
-        }
-    }
+//    splits {
+//        abi{
+//            enable true
+//            reset()
+//            include 'x86' , 'armeabi-v7a','x86_64'
+//            universalApk true
+//        }
+//    }
 }
 
 
@@ -76,6 +76,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "com.kakao.sdk:v2-user:2.0.1"
     //-------------------카카오---------------------------
     implementation "com.kakao.sdk:v2-all:2.11.2" // 전체 모듈 설치, 2.11.0 버전부터 지원
 }

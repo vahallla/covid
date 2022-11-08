@@ -21,18 +21,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
+import kakao.a.e
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapReverseGeoCoder
 import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Byte.toString
+import java.lang.Integer.toString
+import java.lang.Long.toString
 
 
-class MapActivity : AppCompatActivity() {
+open class MapActivity : AppCompatActivity() {
 
     companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
@@ -46,7 +49,6 @@ class MapActivity : AppCompatActivity() {
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""        // 검색 키워드
     private val ACCESS_FINE_LOCATION = 1000
-    private var radius = 200
 
 
 
@@ -68,9 +70,12 @@ class MapActivity : AppCompatActivity() {
             override fun onClick(v: View, position: Int) {
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
+
             }
+
         })
 
+//        Log.e("listItems[position].y,listItems[position].x", e.toString())
 
 
 
@@ -78,8 +83,7 @@ class MapActivity : AppCompatActivity() {
         binding.btnSearch.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
-            radius = 200
-            searchKeyword(keyword,pageNumber,10000,pageNumber)
+            searchKeyword(keyword,pageNumber)
 
 
 
@@ -87,17 +91,15 @@ class MapActivity : AppCompatActivity() {
         // 이전 페이지 버튼
         binding.btnPrevPage.setOnClickListener {
             pageNumber--
-            radius = 200
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,pageNumber,10000,pageNumber)
+            searchKeyword(keyword,pageNumber)
         }
 
         // 다음 페이지 버튼
         binding.btnNextPage.setOnClickListener {
             pageNumber++
-            radius = 200
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,pageNumber,10000,pageNumber)
+            searchKeyword(keyword,pageNumber)
         }
          //위치추적 버튼
         binding.btnStart.setOnClickListener {
@@ -117,19 +119,19 @@ class MapActivity : AppCompatActivity() {
             stopTracking()
         }
 
-//        binding.mapView.setCurrentLocationEventListener(onCurrentLocationUpdate())
+        //----------------------------------최신 버전 구분-------------------------------------
         //이게 있어야 최신 파일
     }
 
 
     // 키워드 검색 함수
-    private fun searchKeyword(keyword: String,location:Int , radius: Int, page: Int) {
+    private fun searchKeyword(keyword: String, page: Int) {
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword,10000 ,page,location)    // 검색 조건 입력
+        val call = api.getSearchKeyword(API_KEY, keyword,10000 ,page)    // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object: Callback<ResultSearchKeyword> {
@@ -189,7 +191,6 @@ class MapActivity : AppCompatActivity() {
         } else {
             // 검색 결과 없음
             makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
-
 
         }
     }
@@ -278,6 +279,9 @@ class MapActivity : AppCompatActivity() {
         Toast.makeText(this,"내 위치 추적을 중지합니다.",Toast.LENGTH_SHORT).show()
     }
     // 위치값을 반환 받는다
+    private fun getCurrentPosition(){
+
+    }
 
 
 }
