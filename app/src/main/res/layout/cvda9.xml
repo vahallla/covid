@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scaleType="fitStart"
-        app:srcCompat="@drawable/cvdimg2" />
+        app:srcCompat="@drawable/cvdimg9" />
 </ScrollView>
