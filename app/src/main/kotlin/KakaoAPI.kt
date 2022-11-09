@@ -28,8 +28,8 @@ interface KakaoAPI {
     fun getSearchKeyword(
         @Header("Authorization") key: String,     // 카카오 API 인증키 [필수]
         @Query("query") query: String,            // 검색을 원하는 질의어 [필수]
-        @Query("x") uLatitude : String,
-        @Query("y") uLongitude : String,
+        @Query("x") uLongitude : String,
+        @Query("y") uLatitude : String,
         @Query("radius") radius: Int,
         @Query("page") page: Int,                  // 결과 페이지 번호
 

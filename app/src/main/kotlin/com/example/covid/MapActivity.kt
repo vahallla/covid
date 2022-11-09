@@ -46,16 +46,9 @@ open class MapActivity : AppCompatActivity() {
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""        // 검색 키워드
     private val ACCESS_FINE_LOCATION = 1000
-    private val uLatitude = ""
-    private val uLongitude = ""
-    private var xpoint = uLatitude
-    private var ypoint = uLongitude
+    private var xpoint = ""
+    private var ypoint = ""
 
-//    private var xvalue = ulatitude
-
-
-
-//    private var centerPoint: MapPoint? = null
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -135,7 +128,7 @@ open class MapActivity : AppCompatActivity() {
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
 
-        val call = api.getSearchKeyword(API_KEY, keyword, xpoint uLatitude= , uLongitude=ypoint, 10000 ,page)    // 검색 조건 입력
+        val call = api.getSearchKeyword(API_KEY, keyword, xpoint, ypoint, 10000 ,page)    // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object: Callback<ResultSearchKeyword> {
@@ -275,7 +268,8 @@ open class MapActivity : AppCompatActivity() {
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
-        val uNowPosition = MapPoint.mapPointWithGeoCoord(uLatitude!!, uLongitude!!)
+        var xpoint = uLongitude
+        var ypoint = uLatitude
 
         Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
