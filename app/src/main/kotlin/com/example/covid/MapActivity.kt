@@ -1,12 +1,13 @@
 package com.example.covid
 
-import KakaoAPI
 import ListAdapter
 import ListLayout
+import KakaoAPI
 import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
@@ -21,7 +22,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
-import kakao.a.e
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -30,9 +30,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Byte.toString
-import java.lang.Integer.toString
-import java.lang.Long.toString
 
 
 open class MapActivity : AppCompatActivity() {
@@ -49,6 +46,12 @@ open class MapActivity : AppCompatActivity() {
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""        // 검색 키워드
     private val ACCESS_FINE_LOCATION = 1000
+    private val uLatitude = ""
+    private val uLongitude = ""
+    private var xpoint = uLatitude
+    private var ypoint = uLongitude
+
+//    private var xvalue = ulatitude
 
 
 
@@ -83,7 +86,7 @@ open class MapActivity : AppCompatActivity() {
         binding.btnSearch.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
             pageNumber = 1
-            searchKeyword(keyword,pageNumber)
+            searchKeyword(keyword,xpoint,ypoint, 10000,pageNumber)
 
 
 
@@ -92,14 +95,14 @@ open class MapActivity : AppCompatActivity() {
         binding.btnPrevPage.setOnClickListener {
             pageNumber--
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,pageNumber)
+            searchKeyword(keyword,xpoint,ypoint, 10000,pageNumber)
         }
 
         // 다음 페이지 버튼
         binding.btnNextPage.setOnClickListener {
             pageNumber++
             binding.tvPageNumber.text = pageNumber.toString()
-            searchKeyword(keyword,pageNumber)
+            searchKeyword(keyword,xpoint,ypoint, 10000,pageNumber)
         }
          //위치추적 버튼
         binding.btnStart.setOnClickListener {
@@ -125,13 +128,14 @@ open class MapActivity : AppCompatActivity() {
 
 
     // 키워드 검색 함수
-    private fun searchKeyword(keyword: String, page: Int) {
+    private fun searchKeyword(keyword: String, xpoint: String, ypoint: String, radius: Int ,page: Int) {
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
-        val call = api.getSearchKeyword(API_KEY, keyword,10000 ,page)    // 검색 조건 입력
+
+        val call = api.getSearchKeyword(API_KEY, keyword, xpoint uLatitude= , uLongitude=ypoint, 10000 ,page)    // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(object: Callback<ResultSearchKeyword> {
@@ -266,7 +270,14 @@ open class MapActivity : AppCompatActivity() {
     // 위치추적 시작
     private fun startTracking() {
         binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-        Toast.makeText(this,"현재 나의 위치로 이동합니다.",Toast.LENGTH_SHORT).show()
+
+        val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        val uLatitude = userNowLocation?.latitude
+        val uLongitude = userNowLocation?.longitude
+        val uNowPosition = MapPoint.mapPointWithGeoCoord(uLatitude!!, uLongitude!!)
+
+        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
 
     }
@@ -279,9 +290,7 @@ open class MapActivity : AppCompatActivity() {
         Toast.makeText(this,"내 위치 추적을 중지합니다.",Toast.LENGTH_SHORT).show()
     }
     // 위치값을 반환 받는다
-    private fun getCurrentPosition(){
 
-    }
 
 
 }
