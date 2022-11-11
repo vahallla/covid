@@ -50,6 +50,8 @@ open class MapActivity : AppCompatActivity() {
     private var ypoint = ""
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
@@ -57,6 +59,17 @@ open class MapActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        // 중심 좌표 이동 내 위치로
+        val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        val uLatitude = userNowLocation?.latitude
+        val uLongitude = userNowLocation?.longitude
+
+        binding.mapView.setMapCenterPoint(uLatitude?.let { uLongitude?.let { it1 ->
+            MapPoint.mapPointWithGeoCoord(it,
+                it1
+            )
+        } },true)
 
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -97,7 +110,7 @@ open class MapActivity : AppCompatActivity() {
             binding.tvPageNumber.text = pageNumber.toString()
             searchKeyword(keyword,xpoint,ypoint, 10000,pageNumber)
         }
-         //위치추적 버튼
+        //위치추적 버튼
         binding.btnStart.setOnClickListener {
             if (checkLocationService()) {
                 // GPS가 켜져있을 경우
@@ -122,6 +135,16 @@ open class MapActivity : AppCompatActivity() {
 
     // 키워드 검색 함수
     private fun searchKeyword(keyword: String, xpoint: String, ypoint: String, radius: Int ,page: Int) {
+
+        val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        val uLatitude = userNowLocation?.latitude
+        val uLongitude = userNowLocation?.longitude
+
+        this@MapActivity.xpoint = uLongitude.toString() // 추가 된 부분 삭제하면 작동 함
+        this@MapActivity.ypoint = uLatitude.toString() // 어? 왜 병원 검색할때는 익산시만 뜨지?
+
+
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -162,7 +185,7 @@ open class MapActivity : AppCompatActivity() {
                     document.address_name,
                     document.x.toDouble(),
                     document.y.toDouble()
-                    )
+                )
                 listItems.add(item)
 
 
@@ -235,8 +258,8 @@ open class MapActivity : AppCompatActivity() {
         }
     }
 
-     //권한 요청 후 행동
-     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    //권한 요청 후 행동
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == ACCESS_FINE_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -264,13 +287,11 @@ open class MapActivity : AppCompatActivity() {
     private fun startTracking() {
         binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
 
+
         val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
-        var xpoint = uLongitude
-        var ypoint = uLatitude
-
         Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
 
