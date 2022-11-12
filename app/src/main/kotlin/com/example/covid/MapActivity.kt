@@ -67,20 +67,23 @@ open class MapActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        // 중심 좌표 이동 내 위치로
+        startTracking()
+
         binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
         binding.mapView.setPOIItemEventListener(eventListener)  // 마커 클릭 이벤트 리스너 등록
 
         // 중심 좌표 이동 내 위치로
-        val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        val uLatitude = userNowLocation?.latitude
-        val uLongitude = userNowLocation?.longitude
-
-        binding.mapView.setMapCenterPoint(uLatitude?.let { uLongitude?.let { it1 ->
-            MapPoint.mapPointWithGeoCoord(it,
-                it1
-            )
-        } },true)
+//        val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+//        val uLatitude = userNowLocation?.latitude
+//        val uLongitude = userNowLocation?.longitude
+//
+//        binding.mapView.setMapCenterPoint(uLatitude?.let { uLongitude?.let { it1 ->
+//            MapPoint.mapPointWithGeoCoord(it,
+//                it1
+//            )
+//        } },true)
 
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
