@@ -63,7 +63,10 @@ open class MapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMapBinding.inflate(layoutInflater)
         val view = binding.root
+        permissionCheck()
         setContentView(view)
+
+
         binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
         binding.mapView.setPOIItemEventListener(eventListener)  // 마커 클릭 이벤트 리스너 등록
 
@@ -99,7 +102,7 @@ open class MapActivity : AppCompatActivity() {
         //검색 버튼
         binding.btnSearch.setOnClickListener {
             keyword = binding.etSearchField.text.toString()
-            pageNumber = 1
+            binding.tvPageNumber.text = pageNumber.toString() // 수정 1
             searchKeyword(keyword,xpoint,ypoint, 10000,pageNumber)
 
 
@@ -308,7 +311,10 @@ open class MapActivity : AppCompatActivity() {
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
-        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
+        this@MapActivity.xpoint = uLongitude.toString() // 추가 된 부분 삭제하면 작동 함
+        this@MapActivity.ypoint = uLatitude.toString()
+//        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"현재 내 위치를 찾습니다",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
 
     }
