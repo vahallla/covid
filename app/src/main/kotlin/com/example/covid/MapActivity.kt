@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
 import net.daum.mf.map.api.CalloutBalloonAdapter
@@ -33,10 +34,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.*
 
 
-
-
+val dis = ""
 
 
 open class MapActivity : AppCompatActivity() {
@@ -57,6 +58,11 @@ open class MapActivity : AppCompatActivity() {
     private var ypoint = ""
 
     private val eventListener = MarkerEventListener(this)
+
+
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -219,7 +225,7 @@ open class MapActivity : AppCompatActivity() {
                 }
 
                 binding.mapView.addPOIItem(point)
-
+                val dis = DistanceManager.getDistance(document.x.toDouble(),document.y.toDouble(),this.xpoint.toDouble(),this.ypoint.toDouble())
 
             }
             listAdapter.notifyDataSetChanged()
@@ -306,7 +312,7 @@ open class MapActivity : AppCompatActivity() {
 
 
     // 위치추적 시작
-    private fun startTracking() {
+     fun startTracking() {
         binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
 
 
@@ -331,7 +337,27 @@ open class MapActivity : AppCompatActivity() {
     }
     // 위치값을 반환 받는다
 
+    object DistanceManager {
 
+        private const val R = 6372.8 * 1000
+
+        /**
+         * 두 좌표의 거리를 계산한다.
+         *
+         * @param lat1 위도1
+         * @param lon1 경도1
+         * @param lat2 위도2
+         * @param lon2 경도2
+         * @return 두 좌표의 거리(m)
+         */
+        fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Int {
+            val dLat = Math.toRadians(lat2 - lat1)
+            val dLon = Math.toRadians(lon2 - lon1)
+            val a = sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2))
+            val c = 2 * asin(sqrt(a))
+            return (R * c).toInt()
+        }
+    }
 
 }
 //말풍선
@@ -340,10 +366,13 @@ class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
     val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
     val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
 
+
+
+
     override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
         // 마커 클릭 시 나오는 말풍선
         name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
-        address.text = "getCalloutBalloon"
+        address.text = dis.toString()
         return mCalloutBalloon
     }
 
@@ -385,3 +414,4 @@ class MarkerEventListener(val context: Context): MapView.POIItemEventListener {
         // 마커의 속성 중 isDraggable = true 일 때 마커를 이동시켰을 경우
     }
 }
+
