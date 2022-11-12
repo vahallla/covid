@@ -210,7 +210,7 @@ open class MapActivity : AppCompatActivity() {
                     document.address_name,
                     document.x.toDouble(),
                     document.y.toDouble(),
-                    dis = DistanceManager.getDistance(document.x.toDouble(),document.y.toDouble(),this.xpoint.toDouble(),this.ypoint.toDouble()).toDouble()
+                    dis = DistanceManager.getDistance(document.x.toDouble(),document.y.toDouble(),this.xpoint.toDouble(),this.ypoint.toDouble()).toString()+"m"
                 )
                 listItems.add(item)
 

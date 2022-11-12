@@ -20,7 +20,7 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         holder.name.text = itemList[position].name
         holder.road.text = itemList[position].road
         holder.address.text = itemList[position].address
-        holder.dis.text = itemList[position].dis.toString()
+        holder.dis.text = itemList[position].dis
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)

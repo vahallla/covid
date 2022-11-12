@@ -5,4 +5,4 @@ class ListLayout(val name: String,      // 장소명
                  val address: String,  // 지번 주소
                  val x: Double,         // 경도(Longitude)
                  val y: Double,
-                 val dis: Double)         // 위도(Latitude)
+                 val dis: String)         // 위도(Latitude)
