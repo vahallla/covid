@@ -56,30 +56,8 @@ public class support_java extends AppCompatActivity {
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webview1 = (WebView)findViewById(R.id.webview1);
-                //webview1.loadUrl(url);
-
-                WebSettings webSettings = webview1.getSettings();
-                webSettings.setJavaScriptEnabled(true);
-
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
-
-                //webview1.setWebChromeClient(new WebChromeClient());
-
-
-                webview1.setWebViewClient(new WebViewClient());
-                webview1.loadUrl("https://covid19m.kdca.go.kr/KP/35700092");
-
-                ActionBar actionBar=getSupportActionBar();
-                actionBar.hide();
-
-                btn4.setVisibility(View.GONE);
-                btn5.setVisibility(View.GONE);
-                btn6.setVisibility(View.GONE);
-                //여기가 api 적용전 파일
-                //11-1 수정
-
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://covid19m.kdca.go.kr/KP/35700092"));
+                startActivity(intent);
             }
         });
     }
