@@ -13,7 +13,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AlertDialog
@@ -22,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
+import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -30,6 +33,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
+
+
+
 
 
 open class MapActivity : AppCompatActivity() {
@@ -133,6 +140,8 @@ open class MapActivity : AppCompatActivity() {
     }
 
 
+
+
     // 키워드 검색 함수
     private fun searchKeyword(keyword: String, xpoint: String, ypoint: String, radius: Int ,page: Int) {
 
@@ -171,6 +180,9 @@ open class MapActivity : AppCompatActivity() {
         })
     }
 
+
+
+
     // 검색 결과 처리 함수
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
@@ -198,7 +210,28 @@ open class MapActivity : AppCompatActivity() {
                     markerType = MapPOIItem.MarkerType.BluePin
                     selectedMarkerType = MapPOIItem.MarkerType.RedPin
                 }
+
                 binding.mapView.addPOIItem(point)
+
+                class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
+                    val mCalloutBalloon: View = inflater.inflate(R.layout.balloon_layout, null)
+                    val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
+                    val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
+
+                    override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
+                        // 마커 클릭 시 나오는 말풍선
+                        name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
+                        address.text = "getCalloutBalloon"
+                        return mCalloutBalloon
+                    }
+
+                    override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
+                        // 말풍선 클릭 시
+                        address.text = "getPressedCalloutBalloon"
+                        return mCalloutBalloon
+                    }
+                }
+
             }
             listAdapter.notifyDataSetChanged()
 
