@@ -8,17 +8,23 @@
     tools:visibility="visible">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <Button
-            android:id="@+id/covid_document"
+            android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:backgroundTint="?attr/colorControlActivated"
-            android:text="전자 문진표 작성" />
+            android:foreground="@drawable/support_covid3"
+            android:text="Button" />
 
         <Button
             android:id="@+id/imageView4"
@@ -28,13 +34,46 @@
             android:foreground="@drawable/support_covid" />
 
         <Button
-            android:id="@+id/imageView5"
+            android:id="@+id/covid_document"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_marginBottom="540dp"
-            android:foreground="@drawable/support_covid3"
-            android:text="Button" />
+            android:backgroundTint="?attr/colorControlActivated"
+            android:text="전자 문진표 작성" />
 
+        <TextView
+            android:id="@+id/supview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/supview2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="19dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/supview3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/supview4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            android:textSize="24sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
