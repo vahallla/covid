@@ -56,7 +56,7 @@ open class MapActivity : AppCompatActivity() {
     private var xpoint = ""
     private var ypoint = ""
 
-
+    private val eventListener = MarkerEventListener(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -64,7 +64,8 @@ open class MapActivity : AppCompatActivity() {
         binding = ActivityMapBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        permissionCheck() // 맵 버튼 시작할때 위치권한 요청하는 것 없으면 터진다고함
+        binding.mapView.setCalloutBalloonAdapter(CustomBalloonAdapter(layoutInflater))  // 커스텀 말풍선 등록
+        binding.mapView.setPOIItemEventListener(eventListener)  // 마커 클릭 이벤트 리스너 등록
 
         // 중심 좌표 이동 내 위치로
         val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -78,9 +79,6 @@ open class MapActivity : AppCompatActivity() {
             )
         } },true)
 
-        // 중심 좌표 이동 내 위치로
-//        startTracking()
-
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
@@ -93,8 +91,6 @@ open class MapActivity : AppCompatActivity() {
             }
 
         })
-
-
 
 //        Log.e("listItems[position].y,listItems[position].x", e.toString())
 
@@ -158,7 +154,6 @@ open class MapActivity : AppCompatActivity() {
         this@MapActivity.xpoint = uLongitude.toString() // 추가 된 부분 삭제하면 작동 함
         this@MapActivity.ypoint = uLatitude.toString() // 어? 왜 병원 검색할때는 익산시만 뜨지?
 
-        
 
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
@@ -219,25 +214,6 @@ open class MapActivity : AppCompatActivity() {
 
                 binding.mapView.addPOIItem(point)
 
-                // 경호가 추가한 인포윈도우 코드
-                class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
-                    val mCalloutBalloon: View = inflater.inflate(R.layout.balloon_layout, null)
-                    val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
-                    val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
-
-                    override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
-                        // 마커 클릭 시 나오는 말풍선
-                        name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
-                        address.text = "getCalloutBalloon"
-                        return mCalloutBalloon
-                    }
-
-                    override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
-                        // 말풍선 클릭 시
-                        address.text = "getPressedCalloutBalloon"
-                        return mCalloutBalloon
-                    }
-                }
 
             }
             listAdapter.notifyDataSetChanged()
@@ -332,8 +308,7 @@ open class MapActivity : AppCompatActivity() {
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
-//        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
-        Toast.makeText(this,"현재 내 위치를 찾습니다",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
 
     }
@@ -349,4 +324,55 @@ open class MapActivity : AppCompatActivity() {
 
 
 
+}
+//말풍선
+class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
+    val mCalloutBalloon: View = inflater.inflate(R.layout.balloon_layout, null)
+    val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
+    val address: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_address)
+
+    override fun getCalloutBalloon(poiItem: MapPOIItem?): View {
+        // 마커 클릭 시 나오는 말풍선
+        name.text = poiItem?.itemName   // 해당 마커의 정보 이용 가능
+        address.text = "getCalloutBalloon"
+        return mCalloutBalloon
+    }
+
+    override fun getPressedCalloutBalloon(poiItem: MapPOIItem?): View {
+        // 말풍선 클릭 시
+        address.text = "getPressedCalloutBalloon"
+        return mCalloutBalloon
+    }
+}
+
+//마커클릭이벤트
+
+class MarkerEventListener(val context: Context): MapView.POIItemEventListener {
+    override fun onPOIItemSelected(mapView: MapView?, poiItem: MapPOIItem?) {
+        // 마커 클릭 시
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(mapView: MapView?, poiItem: MapPOIItem?) {
+        // 말풍선 클릭 시 (Deprecated)
+        // 이 함수도 작동하지만 그냥 아래 있는 함수에 작성하자
+    }
+
+    override fun onCalloutBalloonOfPOIItemTouched(mapView: MapView?, poiItem: MapPOIItem?, buttonType: MapPOIItem.CalloutBalloonButtonType?) {
+        // 말풍선 클릭 시
+        val builder = AlertDialog.Builder(context)
+        val itemList = arrayOf("토스트", "마커 삭제", "취소")
+        builder.setTitle("${poiItem?.itemName}")
+        builder.setItems(itemList) { dialog, which ->
+            when(which) {
+                0 -> Toast.makeText(context, "토스트", Toast.LENGTH_SHORT).show()  // 토스트
+                1 -> mapView?.removePOIItem(poiItem)    // 마커 삭제
+                2 -> dialog.dismiss()   // 대화상자 닫기
+            }
+        }
+        builder.show()
+    }
+
+    override fun onDraggablePOIItemMoved(mapView: MapView?, poiItem: MapPOIItem?, mapPoint: MapPoint?) {
+        // 마커의 속성 중 isDraggable = true 일 때 마커를 이동시켰을 경우
+    }
 }
