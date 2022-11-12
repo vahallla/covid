@@ -64,7 +64,7 @@ open class MapActivity : AppCompatActivity() {
         binding = ActivityMapBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        permissionCheck() // 맵 버튼 시작할때 위치권한 요청하는 것 없으면 터진다고함
 
         // 중심 좌표 이동 내 위치로
         val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -78,6 +78,9 @@ open class MapActivity : AppCompatActivity() {
             )
         } },true)
 
+        // 중심 좌표 이동 내 위치로
+//        startTracking()
+
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
@@ -90,6 +93,8 @@ open class MapActivity : AppCompatActivity() {
             }
 
         })
+
+
 
 //        Log.e("listItems[position].y,listItems[position].x", e.toString())
 
@@ -153,6 +158,7 @@ open class MapActivity : AppCompatActivity() {
         this@MapActivity.xpoint = uLongitude.toString() // 추가 된 부분 삭제하면 작동 함
         this@MapActivity.ypoint = uLatitude.toString() // 어? 왜 병원 검색할때는 익산시만 뜨지?
 
+        
 
         val retrofit = Retrofit.Builder()          // Retrofit 구성
             .baseUrl(BASE_URL)
@@ -213,6 +219,7 @@ open class MapActivity : AppCompatActivity() {
 
                 binding.mapView.addPOIItem(point)
 
+                // 경호가 추가한 인포윈도우 코드
                 class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
                     val mCalloutBalloon: View = inflater.inflate(R.layout.balloon_layout, null)
                     val name: TextView = mCalloutBalloon.findViewById(R.id.ball_tv_name)
@@ -325,7 +332,8 @@ open class MapActivity : AppCompatActivity() {
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
-        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"현재 내 위치를 찾습니다",Toast.LENGTH_SHORT).show()
         //11월 7일 추가된 부분 2
 
     }
