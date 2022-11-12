@@ -209,7 +209,8 @@ open class MapActivity : AppCompatActivity() {
                     document.road_address_name,
                     document.address_name,
                     document.x.toDouble(),
-                    document.y.toDouble()
+                    document.y.toDouble(),
+                    dis = DistanceManager.getDistance(document.x.toDouble(),document.y.toDouble(),this.xpoint.toDouble(),this.ypoint.toDouble()).toDouble()
                 )
                 listItems.add(item)
 
@@ -225,7 +226,7 @@ open class MapActivity : AppCompatActivity() {
                 }
 
                 binding.mapView.addPOIItem(point)
-                val dis = DistanceManager.getDistance(document.x.toDouble(),document.y.toDouble(),this.xpoint.toDouble(),this.ypoint.toDouble())
+
 
             }
             listAdapter.notifyDataSetChanged()
