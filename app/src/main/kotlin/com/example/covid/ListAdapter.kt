@@ -32,7 +32,6 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         val road: TextView = itemView.findViewById(R.id.tv_list_road)
         val address: TextView = itemView.findViewById(R.id.tv_list_address)
         val dis:TextView = itemView.findViewById(R.id.tv_list_dis)
-
     }
 
     interface OnItemClickListener {
