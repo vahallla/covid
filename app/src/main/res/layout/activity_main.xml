@@ -47,9 +47,9 @@
 
             <ImageView
                 android:id="@+id/imageView7"
-                android:layout_width="158dp"
-                android:layout_height="80dp"
-                app:srcCompat="@drawable/textthree" />
+                android:layout_width="139dp"
+                android:layout_height="89dp"
+                app:srcCompat="@drawable/main13" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,6 +106,16 @@
                 android:foreground="@drawable/three"
                 android:text="Button" />
         </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp">
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,40 +40,58 @@
             android:backgroundTint="?attr/colorControlActivated"
             android:text="전자 문진표 작성" />
 
-        <TextView
-            android:id="@+id/supview1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
-            android:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#00BFFF">
 
-        <TextView
-            android:id="@+id/supview2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="19dp"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/supview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textColor="#FF3CBB"
+                android:layout_marginStart="1dp"
+                android:text="TextView"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/supview3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:text="TextView"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/supview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#FF3CBB"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/supview4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/supview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textColor="#FF3CBB"
+                android:text="TextView"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/supview4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_gravity="center"
+                android:textColor="#FF3CBB"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
