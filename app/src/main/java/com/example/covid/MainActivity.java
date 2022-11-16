@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override//버튼 클릭시 이벤트 1,2,3
     public void onClick(View view){
         if(view.getId()==R.id.button_move1){
-                Intent intent = new Intent(MainActivity.this, covid_java.class);
-                startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, covid_java.class);
+            startActivity(intent);
         }
-      else if(view.getId()==R.id.button_move2){
+        else if(view.getId()==R.id.button_move2){
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
             startActivity(intent);
         }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-        }
+    }
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 }
-
 
 
 

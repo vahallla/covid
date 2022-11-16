@@ -114,4 +114,3 @@ public class support_java extends AppCompatActivity {
         }
     };
 }
-

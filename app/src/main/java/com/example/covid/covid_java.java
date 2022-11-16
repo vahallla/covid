@@ -35,6 +35,8 @@ public class covid_java extends AppCompatActivity implements View.OnClickListene
         btn14.setOnClickListener(this);
         Button btn15 = (Button) findViewById(R.id.button9);
         btn15.setOnClickListener(this);
+        Button btn16 = (Button) findViewById(R.id.button10);
+        btn16.setOnClickListener(this);
 
 
     }
@@ -67,6 +69,9 @@ public class covid_java extends AppCompatActivity implements View.OnClickListene
             startActivity(intent);
         } else if (view.getId() == R.id.button9) {
             Intent intent = new Intent(covid_java.this, cvd9.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.button10) {
+            Intent intent = new Intent(covid_java.this, cvd10.class);
             startActivity(intent);
 
         }
