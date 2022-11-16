@@ -314,13 +314,19 @@ open class MapActivity : AppCompatActivity() {
 
     // 위치추적 시작
      fun startTracking() {
-        binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-
-
         val lm : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val userNowLocation: Location? = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         val uLatitude = userNowLocation?.latitude
         val uLongitude = userNowLocation?.longitude
+
+        binding.mapView.setMapCenterPoint(uLatitude?.let { uLongitude?.let { it1 ->
+            MapPoint.mapPointWithGeoCoord(it,
+                it1
+            )
+        } },true)
+
+        binding.mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+
         this@MapActivity.xpoint = uLongitude.toString() // 추가 된 부분 삭제하면 작동 함
         this@MapActivity.ypoint = uLatitude.toString()
 //        Toast.makeText(this," $uLatitude $uLongitude",Toast.LENGTH_SHORT).show()
@@ -399,11 +405,11 @@ class MarkerEventListener(val context: Context): MapView.POIItemEventListener {
     override fun onCalloutBalloonOfPOIItemTouched(mapView: MapView?, poiItem: MapPOIItem?, buttonType: MapPOIItem.CalloutBalloonButtonType?) {
         // 말풍선 클릭 시
         val builder = AlertDialog.Builder(context)
-        val itemList = arrayOf("토스트", "마커 삭제", "취소")
+        val itemList = arrayOf("거리 계산", "마커 삭제", "취소")
         builder.setTitle("${poiItem?.itemName}")
         builder.setItems(itemList) { dialog, which ->
             when(which) {
-                0 -> Toast.makeText(context, "토스트", Toast.LENGTH_SHORT).show()  // 토스트
+                0 -> makeText(context, "$dis", Toast.LENGTH_SHORT).show()  // 토스트
                 1 -> mapView?.removePOIItem(poiItem)    // 마커 삭제
                 2 -> dialog.dismiss()   // 대화상자 닫기
             }
