@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000">
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/button"
@@ -14,8 +13,8 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="개인방역 6대 중요수칙"
-        android:textColor="#F44336"
-        android:textSize="16sp" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button2"
@@ -24,9 +23,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="코로나 주요 증상"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button3"
@@ -35,9 +34,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="격리해제와 해제 후 주의사항"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button4"
@@ -46,9 +45,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="코로나 유증상 시 행동 수칙"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button5"
@@ -57,9 +56,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="자가격리대상자 생활수칙"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button6"
@@ -68,9 +67,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="확진 후 외출가능 범위, 주의사항"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button7"
@@ -79,9 +78,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="해외입국자 방역관리 안내"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button8"
@@ -90,9 +89,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="자가격리 중 발생하는 생활쓰레기 처리법"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button9"
@@ -101,9 +100,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="어린이 코로나 증상별 대응요령"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button10"
@@ -112,9 +111,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         style="?android:borderlessButtonStyle"
-        android:textColor="#F44336"
+        android:textColor="#000"
         android:text="자가격리대상자 동거인 생활수칙"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
 
 
