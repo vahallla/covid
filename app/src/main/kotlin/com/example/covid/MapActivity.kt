@@ -1,8 +1,8 @@
 package com.example.covid
 
+import KakaoAPI
 import ListAdapter
 import ListLayout
-import KakaoAPI
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -22,9 +22,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.covid.databinding.ActivityMapBinding
+import kotlinx.android.synthetic.main.balloon_layout.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -35,6 +35,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.math.*
+
 
 
 val dis = ""
@@ -73,6 +74,11 @@ open class MapActivity : AppCompatActivity() {
         setContentView(view)
 
 
+
+
+
+
+
         // 중심 좌표 이동 내 위치로
         //startTracking()
 
@@ -91,6 +97,8 @@ open class MapActivity : AppCompatActivity() {
             )
         } },true)
 
+
+
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
@@ -99,6 +107,13 @@ open class MapActivity : AppCompatActivity() {
             override fun onClick(v: View, position: Int) {
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
+
+
+
+
+
+
+
 
             }
 
@@ -393,6 +408,7 @@ class CustomBalloonAdapter(inflater: LayoutInflater): CalloutBalloonAdapter {
 //마커클릭이벤트
 
 class MarkerEventListener(val context: Context): MapView.POIItemEventListener {
+
     override fun onPOIItemSelected(mapView: MapView?, poiItem: MapPOIItem?) {
         // 마커 클릭 시
     }
@@ -402,23 +418,39 @@ class MarkerEventListener(val context: Context): MapView.POIItemEventListener {
         // 이 함수도 작동하지만 그냥 아래 있는 함수에 작성하자
     }
 
-    override fun onCalloutBalloonOfPOIItemTouched(mapView: MapView?, poiItem: MapPOIItem?, buttonType: MapPOIItem.CalloutBalloonButtonType?) {
+
+    override fun onCalloutBalloonOfPOIItemTouched(
+        mapView: MapView?,
+        poiItem: MapPOIItem?,
+        buttonType: MapPOIItem.CalloutBalloonButtonType?)
+    {
         // 말풍선 클릭 시
+
         val builder = AlertDialog.Builder(context)
-        val itemList = arrayOf("거리 계산", "마커 삭제", "취소")
+        val itemList = arrayOf("거리 계산", "알림 테스트", "취소")
         builder.setTitle("${poiItem?.itemName}")
         builder.setItems(itemList) { dialog, which ->
-            when(which) {
+            when (which) {
                 0 -> makeText(context, "$dis", Toast.LENGTH_SHORT).show()  // 토스트
-                1 -> mapView?.removePOIItem(poiItem)    // 마커 삭제
+                1 -> makeText(context, "$dis", Toast.LENGTH_SHORT).show()  // 토스트
                 2 -> dialog.dismiss()   // 대화상자 닫기
             }
         }
         builder.show()
     }
 
-    override fun onDraggablePOIItemMoved(mapView: MapView?, poiItem: MapPOIItem?, mapPoint: MapPoint?) {
+
+
+
+    override fun onDraggablePOIItemMoved(
+        mapView: MapView?,
+        poiItem: MapPOIItem?,
+        mapPoint: MapPoint?
+    )
+    {
         // 마커의 속성 중 isDraggable = true 일 때 마커를 이동시켰을 경우
     }
+
+
 }
 

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <Button
         android:id="@+id/button"
@@ -18,103 +19,102 @@
 
     <Button
         android:id="@+id/button2"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="코로나 주요 증상"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button3"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="격리해제와 해제 후 주의사항"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button4"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="코로나 유증상 시 행동 수칙"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button5"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="자가격리대상자 생활수칙"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button6"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="확진 후 외출가능 범위, 주의사항"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button7"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="해외입국자 방역관리 안내"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button8"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="자가격리 중 발생하는 생활쓰레기 처리법"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button9"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="어린이 코로나 증상별 대응요령"
+        android:textColor="#000"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/button10"
+        style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        style="?android:borderlessButtonStyle"
-        android:textColor="#000"
         android:text="자가격리대상자 동거인 생활수칙"
+        android:textColor="#000"
         android:textSize="20sp" />
-
 
 
 </LinearLayout>
